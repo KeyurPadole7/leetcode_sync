@@ -3,9 +3,19 @@ public:
     void sortColors(vector<int>& nums) {
         int n = nums.size();
 
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<n-1; j++){
-                if(nums[j] > nums[j+1]) swap(nums[j], nums[j+1]);
+        int l = 0;
+        int m = 0;
+        int r = n-1;
+
+        while (m<=r){
+            if(nums[m]==0){
+                swap(nums[m], nums[l]);
+                m++; l++;
+            }else if(nums[m]==1){
+                m++;
+            }else{
+                swap(nums[m], nums[r]);
+                r--;
             }
         }
     }
