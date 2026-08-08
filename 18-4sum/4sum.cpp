@@ -7,12 +7,16 @@ public:
         sort(nums.begin(), nums.end());
         int n = nums.size();
         if (n < 4) return ans;
-        
+
         long long sum = 0;
         int k,l;
 
         for(int i = 0; i<n-3; i++){
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
             for(int j = i + 1; j<n-2; j++){
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+
                 k = j + 1;
                 l = n-1;
 
@@ -28,9 +32,7 @@ public:
                     }else if(sum>target) l--;
                     else k++;
                 }
-                while(j<n-2 && nums[j] == nums[j+1]) j++;
             }
-            while(i<n-2 && nums[i] == nums[i+1]) i++;
         }
 
         return ans;
