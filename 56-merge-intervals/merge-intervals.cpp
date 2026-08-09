@@ -5,7 +5,6 @@ public:
         sort(intervals.begin(), intervals.end());
 
         vector<vector<int>> ans;
-        if(intervals.empty()) return ans;
         ans.push_back(intervals[0]);
 
         for(int i = 0; i < intervals.size(); i++){
