@@ -22,10 +22,6 @@ public:
                 count += m[val];
             }
 
-            if(!m.contains(pfs[j])){
-                m[pfs[j]] = 0;
-            }
-
             m[pfs[j]]++;
         }
 
