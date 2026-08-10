@@ -3,13 +3,9 @@ public:
     int findDuplicate(vector<int>& nums) {
         unordered_set<int> s;
         int n = nums.size();
-        for(int i = 0; i<=n; i++){
-            if(s.contains(nums[i])){
-                return nums[i];
-            }
-            else{
-                s.insert(nums[i]);
-            }
+        for(int val : nums){
+            if(s.contains(val)) return val;
+            else s.insert(val);
         }
 
         return -1;
