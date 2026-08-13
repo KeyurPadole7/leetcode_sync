@@ -8,7 +8,7 @@ public:
         }
 
         vector<int> temp;
-        temp.reserve(m*n);
+        temp.reserve(m+n);
 
         int i = 0;
         int j = 0;
