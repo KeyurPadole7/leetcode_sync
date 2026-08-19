@@ -1,11 +1,6 @@
 class Solution {
 public:
     vector<vector<int>> ans;
-    vector<vector<int>> permute(vector<int>& nums) {
-        per(nums, 0);
-        sort(ans.begin(), ans.end());
-        return ans;
-    }
 
     void per(vector<int>& nums, int idx){
         if(idx == nums.size()){
@@ -18,5 +13,11 @@ public:
             per(nums, idx+1);
             swap(nums[i], nums[idx]);
         }
+    }
+    
+    vector<vector<int>> permute(vector<int>& nums) {
+        per(nums, 0);
+        sort(ans.begin(), ans.end());
+        return ans;
     }
 };
