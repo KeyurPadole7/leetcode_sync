@@ -7,6 +7,7 @@ public:
         vector<int> bkt;
 
         fss(nums, bkt, 0);
+        sort(ans.begin(), ans.end());
         return ans;
     }
 
