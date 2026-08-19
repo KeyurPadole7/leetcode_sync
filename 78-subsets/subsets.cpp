@@ -10,7 +10,7 @@ public:
 
     void fss(vector<int>& nums, vector<int>& bkt, vector<vector<int>>& ans, int i){
         if(i == nums.size()){
-            ans.push_back(bkt);
+            ans.push_back({bkt});
             return;
         }
 
