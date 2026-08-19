@@ -3,6 +3,7 @@ public:
     vector<vector<int>> ans;
     vector<vector<int>> permute(vector<int>& nums) {
         per(nums, 0);
+        sort(ans.begin(), ans.end());
         return ans;
     }
 
