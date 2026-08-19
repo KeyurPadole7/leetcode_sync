@@ -14,12 +14,10 @@ public:
             return;
         }
 
-        fss(nums, bkt, i+1);
-
         bkt.push_back(nums[i]);
         fss(nums, bkt, i+1);
 
         bkt.pop_back();
-        
+        fss(nums, bkt, i+1);
     }
 };
