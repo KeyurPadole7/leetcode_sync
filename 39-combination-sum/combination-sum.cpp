@@ -23,6 +23,7 @@ public:
         vector<int> ctr;
         combsum(arr, tar, 0, ctr, ans);
 
+        sort(arr.begin(), arr.end());
         return ans;
     }
 };
