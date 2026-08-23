@@ -9,8 +9,7 @@ public:
             else if(ch == ']' && stk.top() == '[') stk.pop();
             else stk.push(ch);
         }
-
-        if(stk.empty()) return true;
-        else return false;
+        
+        return stk.empty();
     }
 };
