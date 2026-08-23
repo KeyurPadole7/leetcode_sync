@@ -1,40 +1,31 @@
 class Solution {
 public:
-    int largestRectangleArea(vector<int>& heights) {
-        int n = heights.size();
+    int largestRectangleArea(vector<int>& arr) {
+        int n = arr.size();
         stack<int> s;
-        vector<int> r(n,0);
-        vector<int> l(n,0);
-
-        for(int i = 0; i < n; i++){
-            while(s.size()>0 && heights[s.top()]>=heights[i]) s.pop();
-            if(s.empty()) l[i] = -1;
-            else l[i] = s.top();
-            s.push(i);
-        }
-
-        s = {};
-
-        for(int i = n-1; i>=0; i--){
-            while(s.size()>0 && heights[s.top()]>=heights[i]) s.pop();
-            if(s.empty()) r[i] = -1;
-            else r[i] = s.top();
-            s.push(i);
-        }
-
-        int maxarea = 0;
-        int width;
-        int right;
-        int area;
+        vector<int> sl(n, 0);
+        vector<int> sr(n, 0);
 
         for(int i=0; i<n; i++){
-            if(r[i] == -1) right = n;
-            else right = r[i];
-            width = right - l[i] - 1;
-            area = heights[i] * width;
-            maxarea = max(maxarea, area);
+            while(!s.empty() && arr[s.top()]>=arr[i]) s.pop();
+            if(s.empty()) sl[i] = -1;
+            else sl[i] = s.top();
+            s.push(i);
         }
 
-        return maxarea;
+        s = stack<int>();
+
+        for(int i=n-1; i>=0; i--){
+            while(!s.empty() && arr[s.top()]>=arr[i]) s.pop();
+            if(s.empty()) sr[i] = n;
+            else sr[i] = s.top();
+            s.push(i);
+        }
+
+        int mxarea = 0;
+        for(int i=0; i<n; i++){
+            mxarea = max(mxarea, arr[i]*(sr[i]-sl[i]-1));
+        }
+        return mxarea;
     }
 };
