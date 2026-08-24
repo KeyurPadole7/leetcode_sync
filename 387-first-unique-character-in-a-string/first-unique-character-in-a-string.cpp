@@ -7,15 +7,15 @@ public:
         for(int i=0; i<s.size(); i++){
             if(!m.contains(s[i])){
                 m[s[i]] = 0;
-                q.push(s[i]);
+                q.push(i);
             }
             m[s[i]]++;
+
+            while(q.size()>0 && m[s[q.front()]]>1) q.pop();
         }
 
-        for(int i=0; i<s.size(); i++){
-            if(m[s[i]] == 1) return i;
-        }
+        int sol = q.empty() ? -1: q.front();
+        return sol;
 
-        return -1;
     }
 };
