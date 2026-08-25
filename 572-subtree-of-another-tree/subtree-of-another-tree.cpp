@@ -24,7 +24,9 @@ public:
         if(root == nullptr) return false;
         bool lcheck = false, rcheck=false, check=false;
 
-        check = isSameTree(root, subRoot);
+        if(root->val == subRoot->val){
+            check = isSameTree(root, subRoot);
+        }
         lcheck = isSubtree(root->left, subRoot);
         rcheck = isSubtree(root->right, subRoot);
 
