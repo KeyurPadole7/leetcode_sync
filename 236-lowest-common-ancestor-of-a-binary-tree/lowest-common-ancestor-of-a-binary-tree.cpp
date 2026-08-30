@@ -15,7 +15,7 @@ public:
         TreeNode* rgt = lowestCommonAncestor(root->right, p, q);
 
         if(lft && rgt) return root;
-        if(lft == nullptr && rgt == nullptr) return nullptr;
-        return lft == nullptr? rgt : lft;
+        else if(lft == nullptr && rgt == nullptr) return nullptr;
+        else return lft == nullptr? rgt : lft;
     }
 };
