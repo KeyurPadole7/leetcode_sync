@@ -24,8 +24,9 @@ public:
     }
 }; */
 
-class Solution { //Memoization
+class Solution {
 public:
+/* //Memoization
     int f(int i, int j, string &p, string &s, vector<vector<int>> &dp){
         if(i==0 && j==0) return true;
         if(i==0 && j>0) return false;
@@ -43,6 +44,7 @@ public:
         return dp[i][j] = false;
 
     }
+*/
 
     bool isMatch(string s, string p) {
         int n = p.size();
