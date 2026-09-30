@@ -1,11 +1,7 @@
-class Solution {
+class Solution { //Memoization
 public:
     int f(int idx, int buy, int cap, vector<int>& prices, vector<vector<vector<int>>> &dp){
-        if(cap==0) return 0;
-        if(idx == prices.size()){
-            if(buy == 1) return 0;
-            else return -1e9;
-        }
+        if(idx == prices.size() || cap==0) return 0;
 
         if(dp[idx][buy][cap]!=-1) return dp[idx][buy][cap];
         int profit;
@@ -22,3 +18,12 @@ public:
         return f(0, 1, k, prices, dp);
     }
 };
+
+// class Solution { //Tabulation
+// public:
+//     int maxProfit(int k, vector<int>& prices) {
+//         int n = prices.size();
+//         vector<vector<vector<int>>> dp(prices.size(), vector<vector<int>>(2, vector<int>(k+1, -1)));
+//         return f(0, 1, k, prices, dp);
+//     }
+// };
