@@ -19,7 +19,7 @@ public:
     }
 };*/
 
-class Solution { //Tabulation
+/*class Solution { //Tabulation
 public:
     int maxProfit(int k, vector<int>& prices) {
         int n = prices.size();
@@ -38,5 +38,29 @@ public:
             }
         }
         return dp[0][1][k];
+    }
+};*/
+
+
+class Solution { //Space Optamization
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        int n = prices.size();
+        vector<vector<int>> ahead(2, vector<int>(k+1, 0)), curr(2, vector<int>(k+1, 0));
+        
+        for(int idx=n-1; idx>=0; idx--){
+            for(int buy=0; buy<=1; buy++){
+                for(int cap=k; cap>0; cap--){
+                    int profit;
+                    if(buy == 1){
+                        curr[buy][cap] = max(-prices[idx]+ahead[0][cap], ahead[1][cap]);
+                    }else{
+                        curr[buy][cap] = max(prices[idx]+ahead[1][cap-1], ahead[0][cap]);
+                    }
+                }
+            }
+            ahead = curr;
+        }
+        return ahead[1][k];
     }
 };
