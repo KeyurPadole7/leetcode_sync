@@ -50,7 +50,7 @@ public:
         
         for(int idx=n-1; idx>=0; idx--){
             for(int buy=0; buy<=1; buy++){
-                for(int cap=k; cap>0; cap--){
+                for(int cap=1; cap<=k; cap++){
                     int profit;
                     if(buy == 1){
                         curr[buy][cap] = max(-prices[idx]+ahead[0][cap], ahead[1][cap]);
