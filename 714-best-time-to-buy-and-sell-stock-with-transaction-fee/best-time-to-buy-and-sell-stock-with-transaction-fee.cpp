@@ -1,4 +1,4 @@
-class Solution {
+/*class Solution {//memoization
 public:
     int f(int idx, int buy, int fee, vector<int>& prices, vector<vector<int>> &dp){
         if(idx == prices.size()) return 0;
@@ -16,5 +16,20 @@ public:
         int n = prices.size();
         vector<vector<int>> dp(n, vector<int>(2, -1));
         return f(0, 1, fee, prices, dp);
+    }
+};*/
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        vector<vector<int>> dp(n+1, vector<int>(2, 0));
+
+        for(int idx=n-1; idx>=0; idx--){
+            dp[idx][1] = max(dp[idx+1][1], -prices[idx]-fee+dp[idx+1][0]);
+            dp[idx][0] = max(dp[idx+1][0], prices[idx]+dp[idx+1][1]);
+        }
+
+        return dp[0][1];
     }
 };
