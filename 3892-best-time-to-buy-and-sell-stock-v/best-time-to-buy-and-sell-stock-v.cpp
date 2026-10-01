@@ -67,7 +67,7 @@ public:
     }
 };*/
 
-class Solution { 
+/*class Solution { //Tabulation
 public:
     long long maximumProfit(vector<int>& prices, int k) {
         int n = prices.size();
@@ -87,6 +87,30 @@ public:
         }
         
         return dp[0][0][0];
-        //return f(0, 0, 0, k, prices, dp);
+    }
+};*/
+
+class Solution { //Space Optimaized 
+public:
+    long long maximumProfit(vector<int>& prices, int k) {
+        int n = prices.size();
+        vector<vector<vector<long long>>> dp(n+1, vector<vector<long long>>(k+1, vector<long long>(3, -1e15)));
+
+        vector<vector<long long>> curr(k+1, vector<long long>(3, -1e15)), ahead(k+1, vector<long long>(3, -1e15));
+        curr[k][0] = ahead[k][0]= 0;
+
+        for(int count=0; count<=k; count++) ahead[count][0] = curr[count][0] = 0;
+        
+
+        for(int idx=n-1; idx>=0; idx--){
+            for(int count=k-1; count>=0; count--){
+                curr[count][0] = max(ahead[count][0], max(prices[idx]+ahead[count][2],-prices[idx]+ahead[count][1]));
+                curr[count][1] = max(ahead[count][1], prices[idx]+ahead[count+1][0]);//long sell
+                curr[count][2] = max(ahead[count][2], -prices[idx]+ahead[count+1][0]);//short buy
+            }
+            ahead = curr;
+        }
+        
+        return ahead[0][0];
     }
 };
