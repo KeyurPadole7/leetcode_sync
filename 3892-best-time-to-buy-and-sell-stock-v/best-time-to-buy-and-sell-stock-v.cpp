@@ -1,4 +1,4 @@
-/*class Solution { //Memoization
+/*class Solution { //Memoization (Old.. approach)
 public:
     long long f(int idx, int ntrans, int strans, int k, vector<int>& prices, vector<vector<vector<long long>>> &dp){
         if(ntrans + strans == 2*k) return 0;
@@ -39,7 +39,7 @@ public:
 };*/
 
 
-class Solution {
+/*class Solution { //Memoization
 public:
     long long f(int idx, int count, int state, int k, vector<int>& prices, vector<vector<vector<long long>>> &dp){
         if(count == k && state == 0) return 0;
@@ -64,5 +64,53 @@ public:
     long long maximumProfit(vector<int>& prices, int k) {
         vector<vector<vector<long long>>> dp(prices.size(), vector<vector<long long>>(k, vector<long long>(3, -1e15)));
         return f(0, 0, 0, k, prices, dp);
+    }
+};*/
+
+class Solution { 
+public:
+    long long f(int idx, int count, int state, int k, vector<int>& prices, vector<vector<vector<long long>>> &dp){
+        if(count == k && state == 0) return 0;
+        if(idx == prices.size()){
+            return state==0? 0 : -1e15;
+        }
+
+        if(dp[idx][count][state]!=-1e15) return dp[idx][count][state];
+
+        long long profit = f(idx+1, count, state, k, prices, dp);
+        if(state == 0){
+            profit = max(profit, -prices[idx]+f(idx+1, count, 1, k, prices, dp)); //long buy
+            profit = max(profit, prices[idx]+f(idx+1, count, 2, k, prices, dp)); //short sell
+        }else if(state == 1){
+            profit = max(profit, prices[idx]+f(idx+1, count+1, 0, k, prices, dp));//long sell
+        }else{
+            profit = max(profit, -prices[idx]+f(idx+1, count+1, 0, k, prices, dp));//short buy
+        }
+        return dp[idx][count][state] = profit;
+    }
+
+    long long maximumProfit(vector<int>& prices, int k) {
+        int n = prices.size();
+        vector<vector<vector<long long>>> dp(n+1, vector<vector<long long>>(k+1, vector<long long>(3, -1e15)));
+        for(int idx=0; idx<=n; idx++) dp[idx][k][0] = 0;
+        for(int count=0; count<=k; count++){
+            dp[n][count][0] = 0;
+            dp[n][count][1] = dp[n][count][1] = -1e15;
+        }
+
+        for(int idx=n-1; idx>=0; idx--){
+            for(int count=k-1; count>=0; count--){
+                long long profit = dp[idx+1][count][0];
+                profit = max(profit, -prices[idx]+dp[idx+1][count][1]); //long buy
+                profit = max(profit, prices[idx]+dp[idx+1][count][2]); //short sell
+
+                dp[idx][count][0] = profit;
+                dp[idx][count][1] = max(dp[idx+1][count][1], prices[idx]+dp[idx+1][count+1][0]);//long sell
+                dp[idx][count][2] = max(dp[idx+1][count][2], -prices[idx]+dp[idx+1][count+1][0]);//short buy
+            }
+        }
+        
+        return dp[0][0][0];
+        //return f(0, 0, 0, k, prices, dp);
     }
 };
