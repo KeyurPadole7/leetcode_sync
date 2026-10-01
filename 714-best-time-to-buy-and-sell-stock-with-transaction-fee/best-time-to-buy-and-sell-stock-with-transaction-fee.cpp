@@ -34,7 +34,7 @@ public:
     }
 };*/
 
-class Solution {
+/*class Solution {// Space optamized.. DP
 public:
     int maxProfit(vector<int>& prices, int fee) {
         int n = prices.size();
@@ -51,5 +51,25 @@ public:
         }
 
         return ahead1;
+    }
+};*/
+
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int hold = -prices[0];
+        int cash = 0;
+
+        for(int i=0; i<prices.size(); i++){
+            int prevhold = hold;
+            int prevcash = cash;
+
+            hold = max(prevhold, prevcash - prices[i]);
+            cash = max(prevcash, prevhold + prices[i] - fee);
+        }
+
+        return cash;
+        
     }
 };
