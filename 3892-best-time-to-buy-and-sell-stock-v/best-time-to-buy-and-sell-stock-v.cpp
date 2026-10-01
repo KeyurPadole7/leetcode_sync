@@ -100,11 +100,7 @@ public:
 
         for(int idx=n-1; idx>=0; idx--){
             for(int count=k-1; count>=0; count--){
-                long long profit = dp[idx+1][count][0];
-                profit = max(profit, -prices[idx]+dp[idx+1][count][1]); //long buy
-                profit = max(profit, prices[idx]+dp[idx+1][count][2]); //short sell
-
-                dp[idx][count][0] = profit;
+                dp[idx][count][0] = max(dp[idx+1][count][0], max(prices[idx]+dp[idx+1][count][2],-prices[idx]+dp[idx+1][count][1]));
                 dp[idx][count][1] = max(dp[idx+1][count][1], prices[idx]+dp[idx+1][count+1][0]);//long sell
                 dp[idx][count][2] = max(dp[idx+1][count][2], -prices[idx]+dp[idx+1][count+1][0]);//short buy
             }
