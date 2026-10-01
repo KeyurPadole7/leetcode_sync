@@ -69,46 +69,24 @@ public:
 
 class Solution { 
 public:
-    long long f(int idx, int count, int state, int k, vector<int>& prices, vector<vector<vector<long long>>> &dp){
-        if(count == k && state == 0) return 0;
-        if(idx == prices.size()){
-            return state==0? 0 : -1e15;
-        }
-
-        if(dp[idx][count][state]!=-1e15) return dp[idx][count][state];
-
-        long long profit = f(idx+1, count, state, k, prices, dp);
-        if(state == 0){
-            profit = max(profit, -prices[idx]+f(idx+1, count, 1, k, prices, dp)); //long buy
-            profit = max(profit, prices[idx]+f(idx+1, count, 2, k, prices, dp)); //short sell
-        }else if(state == 1){
-            profit = max(profit, prices[idx]+f(idx+1, count+1, 0, k, prices, dp));//long sell
-        }else{
-            profit = max(profit, -prices[idx]+f(idx+1, count+1, 0, k, prices, dp));//short buy
-        }
-        return dp[idx][count][state] = profit;
-    }
-
     long long maximumProfit(vector<int>& prices, int k) {
         int n = prices.size();
         vector<vector<vector<long long>>> dp(n+1, vector<vector<long long>>(k+1, vector<long long>(3, -1e15)));
-
-        vector<vector<long long>> curr(k+1, vector<long long>(3, -1e15)), ahead(k+1, vector<long long>(3, -1e15));
-        curr[k][0] = ahead[k][0]= 0;
-
-        for(int count=0; count<=k; count++) ahead[count][0] = curr[count][0] = 0;
-        
+        for(int idx=0; idx<=n; idx++) dp[idx][k][0] = 0;
+        for(int count=0; count<=k; count++){
+            dp[n][count][0] = 0;
+            dp[n][count][1] = dp[n][count][1] = -1e15;
+        }
 
         for(int idx=n-1; idx>=0; idx--){
             for(int count=k-1; count>=0; count--){
-                curr[count][0] = max(ahead[count][0], max(prices[idx]+ahead[count][2],-prices[idx]+ahead[count][1]));
-                curr[count][1] = max(ahead[count][1], prices[idx]+ahead[count+1][0]);//long sell
-                curr[count][2] = max(ahead[count][2], -prices[idx]+ahead[count+1][0]);//short buy
+                dp[idx][count][0] = max(dp[idx+1][count][0], max(prices[idx]+dp[idx+1][count][2],-prices[idx]+dp[idx+1][count][1]));
+                dp[idx][count][1] = max(dp[idx+1][count][1], prices[idx]+dp[idx+1][count+1][0]);//long sell
+                dp[idx][count][2] = max(dp[idx+1][count][2], -prices[idx]+dp[idx+1][count+1][0]);//short buy
             }
-            ahead = curr;
         }
         
-        return ahead[0][0];
+        return dp[0][0][0];
         //return f(0, 0, 0, k, prices, dp);
     }
 };
