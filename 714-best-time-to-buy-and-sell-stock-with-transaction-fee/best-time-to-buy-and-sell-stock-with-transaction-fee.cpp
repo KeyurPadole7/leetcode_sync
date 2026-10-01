@@ -19,7 +19,7 @@ public:
     }
 };*/
 
-class Solution {
+/*class Solution {//Tabulation
 public:
     int maxProfit(vector<int>& prices, int fee) {
         int n = prices.size();
@@ -31,5 +31,25 @@ public:
         }
 
         return dp[0][1];
+    }
+};*/
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int n = prices.size();
+        vector<vector<int>> dp(n+1, vector<int>(2, 0));
+        int ahead1=0, ahead0=0;
+        int curr1, curr0;
+
+        for(int idx=n-1; idx>=0; idx--){
+            curr1 = max(ahead1, -prices[idx]-fee+ahead0);
+            curr0 = max(ahead0, prices[idx]+ahead1);
+
+            ahead0 = curr0;
+            ahead1 = curr1;
+        }
+
+        return ahead1;
     }
 };
