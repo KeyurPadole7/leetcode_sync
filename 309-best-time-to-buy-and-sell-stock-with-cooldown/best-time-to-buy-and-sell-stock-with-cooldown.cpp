@@ -23,16 +23,18 @@ class Solution { //Tabulation
 public:
     int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> dp(n+2, vector<int>(2, 0));
+        vector<int> ahead1(2,0), ahead2(2,0), curr(2,0);
 
         for(int idx=n-1; idx>=0; idx--){
             for(int buy=0; buy<=1; buy++){
-                int profit = dp[idx+1][buy];
-                if(buy == 1) profit = max(profit, -prices[idx] + dp[idx+1][0]);
-                else profit = max(profit, prices[idx] + dp[idx+2][1]);
-                dp[idx][buy] = profit;
+                int profit = ahead1[buy];
+                if(buy == 1) profit = max(profit, -prices[idx] + ahead1[0]);
+                else profit = max(profit, prices[idx] + ahead2[1]);
+                curr[buy] = profit;
             }
+            ahead2 = ahead1;
+            ahead1 = curr;
         }
-        return dp[0][1];
+        return ahead1[1];
     }
 };
