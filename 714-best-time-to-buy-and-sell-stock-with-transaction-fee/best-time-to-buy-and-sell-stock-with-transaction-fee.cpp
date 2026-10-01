@@ -55,7 +55,7 @@ public:
 };*/
 
 
-class Solution {
+/*class Solution {// Optimal
 public:
     int maxProfit(vector<int>& prices, int fee) {
         int hold = -prices[0];
@@ -67,6 +67,26 @@ public:
 
             hold = max(prevhold, prevcash - prices[i]);
             cash = max(prevcash, prevhold + prices[i] - fee);
+        }
+
+        return cash;
+        
+    }
+};*/
+
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int hold = -prices[0];
+        int cash = 0;
+
+        for(int price: prices){
+            int prevhold = hold;
+            int prevcash = cash;
+
+            hold = max(prevhold, prevcash - price);
+            cash = max(prevcash, prevhold + price - fee);
         }
 
         return cash;
