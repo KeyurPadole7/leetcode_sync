@@ -13,7 +13,7 @@ public:
     }
 };*/
 
-class Solution { //Memoization
+/*class Solution { //Memoization
 public:
     int f(int idx, int preidx, vector<int>& nums, vector<vector<int>> &dp){
         if(idx==nums.size()) return 0;
@@ -29,5 +29,22 @@ public:
         int n = nums.size();
         vector<vector<int>> dp(n, vector<int>(n+1, -1));
         return f(0, -1, nums, dp);
+    }
+};*/
+
+class Solution { //Tabulation
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        
+        for(int idx=n-1; idx>=0; idx--){
+            for(int preidx=idx-1; preidx>=-1; preidx--){
+                int len = dp[idx+1][preidx+1]; // Not Take
+                if(preidx==-1 || nums[idx]>nums[preidx]) len = max(len, 1+dp[idx+1][idx+1]); //Take
+                dp[idx][preidx+1] = len;
+            }
+        }
+        return dp[0][0];
     }
 };
