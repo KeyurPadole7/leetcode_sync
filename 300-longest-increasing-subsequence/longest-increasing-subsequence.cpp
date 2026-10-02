@@ -32,7 +32,7 @@ public:
     }
 };*/
 
-class Solution { //Tabulation
+/*class Solution { //Tabulation
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
@@ -46,5 +46,24 @@ public:
             }
         }
         return dp[0][0];
+    }
+};*/
+
+class Solution { //Space Optamized
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        //vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        vector<int> curr(n+1, 0), ahead(n+1, 0);
+        
+        for(int idx=n-1; idx>=0; idx--){
+            for(int preidx=idx-1; preidx>=-1; preidx--){
+                int len = ahead[preidx+1]; // Not Take
+                if(preidx==-1 || nums[idx]>nums[preidx]) len = max(len, 1+ahead[idx+1]); //Take
+                curr[preidx+1] = len;
+            }
+            ahead = curr;
+        }
+        return ahead[0];
     }
 };
