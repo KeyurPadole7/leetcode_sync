@@ -28,7 +28,7 @@ public:
 };*/
 
 
-class Solution { 
+class Solution { //Memoization
 public:
     int minCost(int n, vector<int>& cuts) {
         sort(cuts.begin(), cuts.end());
