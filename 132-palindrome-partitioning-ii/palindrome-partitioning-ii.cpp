@@ -96,7 +96,7 @@ public:
     }
 };*/
 
-class Solution {
+/*class Solution { //Memoization
 public:
     bool ispal(int st, int end, string &s){
         while(st<end){
@@ -124,5 +124,33 @@ public:
         vector<int> dp(n, -1);
 
         return f(0, s, dp) - 1;
+    }
+};*/
+
+class Solution {
+public:
+    bool ispal(int st, int end, string &s){
+        while(st<end){
+            if(s[st++]!=s[end--]) return false;
+        }
+        return true;
+    }
+
+    int minCut(string s) {
+        int n = s.size();
+        vector<int> dp(n+1, 0);
+
+        for(int i=n-1; i>=0; i--){
+            int mn = 1e9;
+            for(int j=i; j<s.size(); j++){
+                if(ispal(i, j, s)){
+                    int count = 1+dp[j+1];
+                    mn = min(mn, count);
+                }
+            }
+            dp[i] = mn;
+        }
+
+        return dp[0]-1;
     }
 };
