@@ -31,7 +31,7 @@ public:
     }
 };*/
 
-class Solution {
+/*class Solution { //Memoization
 public:
     bool f(int idx, string &s, int st, vector<vector<int>> &dp){
         if(idx == s.size()) return st==0;
@@ -62,38 +62,32 @@ public:
         vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
         return f(0, s, st, dp);
     }
-};
-
-
-/*class Solution {
-public:
-    bool f(int idx, int open, string &s, vector<vector<int>> &dp) {
-        if (idx == s.size()) return open == 0;
-        if (dp[idx][open] != -1) return dp[idx][open];
-
-        bool isValid = false;
-
-        if (s[idx] == '(') {
-            isValid = f(idx + 1, open + 1, s, dp);
-        } else if (s[idx] == ')') {
-            if (open > 0) {
-                isValid = f(idx + 1, open - 1, s, dp);
-            }
-        } else { // s[idx] == '*'
-            // 1. Treat '*' as empty string
-            isValid = f(idx + 1, open, s, dp);
-            // 2. Treat '*' as '('
-            if (!isValid) isValid = f(idx + 1, open + 1, s, dp);
-            // 3. Treat '*' as ')'
-            if (!isValid && open > 0) isValid = f(idx + 1, open - 1, s, dp);
-        }
-
-        return dp[idx][open] = isValid;
-    }
-
-    bool checkValidString(string s) {
-        int n = s.size();
-        vector<vector<int>> dp(n, vector<int>(n + 1, -1));
-        return f(0, 0, s, dp);
-    }
 };*/
+
+
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int mnopen = 0;
+        int mxopen = 0;
+
+        for(char c: s){
+            if(c == '('){
+                mnopen++;
+                mxopen++;
+            }
+            else if(c==')'){
+                mnopen--;
+                mxopen--;
+            }
+            else{
+                mnopen--; // ")"
+                mxopen++; // "("
+            }
+
+            if(mxopen<0) return false;
+            if(mnopen<0) mnopen = 0;
+        }
+        return mnopen==0;
+    }
+};
