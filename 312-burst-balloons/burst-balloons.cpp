@@ -24,7 +24,7 @@ public:
     }
 };*/
 
-class Solution { 
+class Solution { // tabulation
 public:
     int maxCoins(vector<int>& nums) {
         nums.insert(nums.begin(), 1);
