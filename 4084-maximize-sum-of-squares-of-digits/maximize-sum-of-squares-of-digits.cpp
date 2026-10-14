@@ -7,9 +7,8 @@ public:
         string ans(sum/9, '9');
         if(sum%9!=0) ans += to_string(sum%9);
 
-        while(ans.size()!=num){
-            ans += '0';
-        }
+        ans.resize(num, '0');
+
 
         return ans;
     }
