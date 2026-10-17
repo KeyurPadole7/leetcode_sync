@@ -11,15 +11,14 @@ class Solution:
             k = len(nums)-1
 
             while(j<k):
-                if (j>i+1 and nums[j]==nums[j-1]):
-                    j += 1
-                    continue
-                if (k<len(nums)-1 and nums[k]==nums[k+1]):
-                    k -= 1
-                    continue
-
                 if(nums[j]+nums[k] == -nums[i]):
                     ans.append([nums[i], nums[j], nums[k]])
+                    while j<k and nums[j]==nums[j+1]:
+                        j += 1
+                    while j<k and nums[k]==nums[k-1]:
+                        k -= 1
+
+                    k -= 1
                     j += 1
                 elif(nums[j]+nums[k] < -nums[i]):
                     j += 1
