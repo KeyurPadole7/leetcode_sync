@@ -1,15 +1,17 @@
 class Solution:
     def countBattleships(self, board: list[list[str]]) -> int:
-        n = len(board)
-        m = len(board[0])
+        if not board or not board[0]:
+            return 0
+
+        n, m = len(board), len(board[0])
 
         count = 0
         for i in range(n):
             for j in range(m):
-                if(board[i][j]=='X'):
-                    if(i>0 and board[i-1][j]=='X'):
+                if board[i][j]=='X':
+                    if i>0 and board[i-1][j]=='X':
                         continue
-                    if(j>0 and board[i][j-1]=='X'):
+                    if j>0 and board[i][j-1]=='X':
                         continue
                     count += 1
                 
