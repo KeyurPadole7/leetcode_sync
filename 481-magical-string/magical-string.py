@@ -11,9 +11,4 @@ class Solution:
                 ms += [2]*ms[i]
                 chanceof1 = True
 
-        count = 0
-        for i in range(n):
-            if ms[i]==1:
-                count += 1
-
-        return count
+        return ms[:n].count(1)
