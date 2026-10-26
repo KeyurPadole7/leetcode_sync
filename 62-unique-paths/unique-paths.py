@@ -1,5 +1,7 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
+        # return math.comb(m+n-2, n-1)
+        
         dp = []
         for _ in range(n):
             row = [1]*m
