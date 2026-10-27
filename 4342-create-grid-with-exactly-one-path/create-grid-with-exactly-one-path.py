@@ -1,13 +1,8 @@
 class Solution:
     def createGrid(self, m: int, n: int) -> list[str]:
-        ans = ["."*n]
-        for i in range(1,m):
-            st = ""
-            for j in range(n):
-                if j == n-1:
-                    st += '.'
-                else:
-                    st += "#"
-            ans.append(st)
+        others = "#"*(n-1)
+        others += "."
 
+        ans = [others for i in range(m)]
+        ans[0] = "."*n
         return ans
