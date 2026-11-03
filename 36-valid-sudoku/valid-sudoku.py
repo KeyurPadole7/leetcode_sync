@@ -18,7 +18,7 @@ class Solution:
 
                 for x in range((i//3)*3, (i//3)*3+3):
                     for y in range((j//3)*3, (j//3)*3+3):
-                        if x==i and y==j:
+                        if x==i or y==j:
                             continue
                         if board[x][y] == curr:
                             return False
