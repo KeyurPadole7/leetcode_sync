@@ -22,7 +22,7 @@ class Solution:
                 free_time, weight, idx = heapq.heappop(busy)
                 heapq.heappush(available, (weight, idx))
 
-            # If no server is free, jump to the next free time
+            # If no server is free, jump to the next free time (just to optimize code)
             if not available:
                 time = busy[0][0]
 
