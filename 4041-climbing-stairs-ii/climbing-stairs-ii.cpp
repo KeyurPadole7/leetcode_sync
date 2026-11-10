@@ -14,7 +14,7 @@ public:
     }
 };*/
 
-
+/*
 class Solution { // Tabulation
 public:
     int climbStairs(int n, vector<int>& cost) {
@@ -29,5 +29,25 @@ public:
         }
 
         return dp[n];
+    }
+};*/
+
+
+class Solution { // space optamised tabulation
+public:
+    int climbStairs(int n, vector<int>& cost) {
+        if(n==1) return cost[0]+1;
+        int temp3 = 0;
+        int temp2 = 1 + cost[1-1];
+        int temp1 = cost[2-1] + min(1+temp2, 4);
+
+        for(int i=3; i<=n; i++){
+            int curr = cost[i-1] + min(temp1+1, min(temp2+4, temp3+9));
+            temp3 = temp2;
+            temp2 = temp1;
+            temp1 = curr;
+        }
+
+        return temp1;
     }
 };
