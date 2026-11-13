@@ -1,3 +1,4 @@
+"""
 from array import array
 
 class Solution:
@@ -98,5 +99,36 @@ class Solution:
                 l += 1
 
             ans += r - l + 1
+
+        return ans
+"""
+
+from typing import List
+
+class Solution:
+    def countNonDecreasingSubarrays(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        nums = nums[::-1]
+
+        stack = []
+        left = 0
+        operations = 0
+        ans = 0
+
+        for right in range(n):
+            while stack and nums[stack[-1]] < nums[right]:
+                j = stack.pop()
+                i = stack[-1] if stack else left - 1
+                operations += (nums[right] - nums[j]) * (j - i)
+
+            stack.append(right)
+
+            while operations > k:
+                operations -= max(0, nums[stack[0]] - nums[left])
+                if stack[0] == left:
+                    stack.pop(0)
+                left += 1
+
+            ans += right - left + 1
 
         return ans
