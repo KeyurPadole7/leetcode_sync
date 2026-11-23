@@ -15,7 +15,7 @@ class ProductOfNumbers:
     def getProduct(self, k: int) -> int:
         if self.zero >= len(self.stream)-k:
             return 0
-        return int(self.stream[-1]/self.stream[-k-1])
+        return self.stream[-1]//self.stream[-k-1]
 
 
 # Your ProductOfNumbers object will be instantiated and called as such:
